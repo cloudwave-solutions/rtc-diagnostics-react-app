@@ -90,6 +90,7 @@ export const edgeNameMap = {
   'london-ix': 'London IX',
   'frankfurt-ix': 'Frankfurt IX',
   'singapore-ix': 'Singapore IX',
+  'sydney-ix': 'Sydney IX'
 };
 
 export function getEdgeName(result: TestResults) {
