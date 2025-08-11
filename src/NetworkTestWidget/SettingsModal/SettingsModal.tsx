@@ -51,6 +51,7 @@ const initialState: InitialState = {
   'frankfurt-ix': false,
   'san-jose-ix': false,
   'singapore-ix': false,
+  'sydney-ix': false
 };
 
 DEFAULT_EDGES.forEach((edge) => (initialState[edge] = true));
@@ -170,6 +171,10 @@ export default function SettingsModal({
                 <FormControlLabel
                   control={<Checkbox checked={edges['singapore-ix']} onChange={handleEdgeChange} name="singapore-ix" />}
                   label="Singapore IX"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={edges['sydney-ix']} onChange={handleEdgeChange} name="sydney-ix" />}
+                  label="Sydney IX"
                 />
               </Grid>
             </Grid>
