@@ -55,4 +55,5 @@ export type Edge =
   | 'london-ix'
   | 'frankfurt-ix'
   | 'san-jose-ix'
-  | 'singapore-ix';
+  | 'singapore-ix'
+  | 'sydney-ix';
