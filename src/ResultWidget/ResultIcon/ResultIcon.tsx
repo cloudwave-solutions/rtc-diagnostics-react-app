@@ -1,22 +1,22 @@
 import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 
-import CloseIcon from '@material-ui/icons/Close';
-import CheckIcon from '@material-ui/icons/CheckCircleOutline';
-import WarningIcon from '@material-ui/icons/ReportProblemOutlined';
+import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from '@mui/icons-material/CheckCircleOutline';
+import WarningIcon from '@mui/icons-material/ReportProblemOutlined';
 import { TestResults } from '../../types';
 import { rows } from '../rows';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  close: {
-    fill: theme.palette.error.main,
-  },
-  warning: {
-    fill: theme.palette.warning.main,
-  },
-  check: {
-    fill: theme.palette.success.main,
-  },
+const StyledCloseIcon = styled(CloseIcon)(({ theme }) => ({
+  fill: theme.palette.error.main,
+}));
+
+const StyledWarningIcon = styled(WarningIcon)(({ theme }) => ({
+  fill: theme.palette.warning.main,
+}));
+
+const StyledCheckIcon = styled(CheckIcon)(({ theme }) => ({
+  fill: theme.palette.success.main,
 }));
 
 interface ResultIconProps {
@@ -24,16 +24,15 @@ interface ResultIconProps {
 }
 
 export default function ResultIcon(props: ResultIconProps) {
-  const classes = useStyles();
   const result = props.result;
   const hasError = Object.values(result?.errors ?? {}).length > 0;
   const hasWarning = result && rows.some((row) => row.getWarning?.(result));
 
   return (
     <>
-      {hasError && <CloseIcon className={classes.close} />}
-      {!hasError && hasWarning && <WarningIcon className={classes.warning} />}
-      {!hasError && !hasWarning && <CheckIcon className={classes.check} />}
+      {hasError && <StyledCloseIcon />}
+      {!hasError && hasWarning && <StyledWarningIcon />}
+      {!hasError && !hasWarning && <StyledCheckIcon />}
     </>
   );
 }

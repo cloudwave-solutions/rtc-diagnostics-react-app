@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Alert from '../common/Alert/Alert';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@mui/material';
 import useTestRunner from './useTestRunner/useTestRunner';
 import EdgeResult from './EdgeResult/EdgeResult';
 import SettingsModal from './SettingsModal/SettingsModal';
-import SettingsIcon from '@material-ui/icons/Settings';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { DEFAULT_EDGES, DEFAULT_CODEC_PREFERENCES } from '../constants';
 
 interface NetworkTestWidgetProps {
@@ -36,7 +36,7 @@ export default function NetworkTestWidget({ getTURNCredentials, getVoiceToken, o
 
   return (
     <div>
-      <Typography variant="h4" paragraph>
+      <Typography variant="h4" component="p">
         Connectivity and Bandwidth Tests
       </Typography>
       <div style={{ margin: '1em 1em 0' }}>

@@ -9,78 +9,90 @@ import {
   TableCell,
   Tooltip,
   Typography,
-  makeStyles,
-  createStyles,
   Theme,
-} from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
+} from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
 
 import ResultIcon from './ResultIcon/ResultIcon';
 import { getBestEdge, getEdgeName } from '../utils';
 import { TestWarnings, TestResults } from '../types';
-import { darken, fade, lighten } from '@material-ui/core/styles/colorManipulator';
+import { alpha, darken, lighten, styled, useTheme } from '@mui/material/styles';
 import { rows } from './rows';
 
-const useStyles = makeStyles((theme: Theme) => {
-  const getBackgroundColor = theme.palette.type === 'light' ? lighten : darken;
-  return createStyles({
-    table: {
-      tableLayout: 'fixed',
-      borderTop: `1px solid ${theme.palette.divider}`,
-      '& td, & th': {
-        width: '260px',
-        borderRight: `1px solid
-      ${
-        // Same implementation as material-ui's table borderBottom.
-        theme.palette.type === 'light'
-          ? lighten(fade(theme.palette.divider, 1), 0.88)
-          : darken(fade(theme.palette.divider, 1), 0.68)
-      }`,
-      },
-      '& td:last-child, & th:last-child': {
-        borderRight: 'none',
-      },
-      '& th, & td:first-child': {
-        fontWeight: 'bold',
-      },
-    },
-    tableCellContent: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      wordBreak: 'break-word',
-      '& svg': {
-        fill: '#000',
-      },
-    },
-    headerContent: {
-      display: 'flex',
-      '& p': {
-        fontWeight: 'bold',
-        marginLeft: '12px',
-      },
-    },
-    bestEdgeCell: {
-      background: getBackgroundColor(theme.palette.success.main, 0.9),
-    },
-    [TestWarnings.warn]: {
-      background: getBackgroundColor(theme.palette.warning.main, 0.9),
-    },
-    [TestWarnings.error]: {
-      background: getBackgroundColor(theme.palette.error.main, 0.9),
-    },
-  });
-});
+const getBackgroundColor = (theme: Theme, color: string, coefficient: number) =>
+  theme.palette.mode === 'light' ? lighten(color, coefficient) : darken(color, coefficient);
+
+const StyledTable = styled(Table)<{ theme?: Theme }>(({ theme }) => ({
+  tableLayout: 'fixed',
+  borderTop: `1px solid ${theme?.palette.divider}`,
+  '& td, & th': {
+    width: '260px',
+    borderRight: `1px solid ${
+      theme?.palette.mode === 'light'
+        ? lighten(alpha(theme?.palette.divider || '#000', 1), 0.88)
+        : darken(alpha(theme?.palette.divider || '#000', 1), 0.68)
+    }`,
+  },
+  '& td:last-child, & th:last-child': {
+    borderRight: 'none',
+  },
+  '& th, & td:first-child': {
+    fontWeight: 'bold',
+  },
+}));
+
+const StyledDivTableCellContent = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  wordBreak: 'break-word',
+  '& svg': {
+    fill: '#000',
+  },
+}));
+
+const StyledDivHeaderContent = styled('div')(() => ({
+  display: 'flex',
+  '& p': {
+    fontWeight: 'bold',
+    marginLeft: '12px',
+  },
+}));
+
+const getTableCellClassName = (
+  theme: Theme,
+  isBestEdge: boolean,
+  warning?: TestWarnings
+): React.CSSProperties => {
+  const baseStyles: React.CSSProperties = {};
+
+  if (warning === TestWarnings.warn) {
+    return {
+      ...baseStyles,
+      background: getBackgroundColor(theme, theme.palette.warning.main, 0.9),
+    };
+  }
+
+  if (warning === TestWarnings.error) {
+    return {
+      ...baseStyles,
+      background: getBackgroundColor(theme, theme.palette.error.main, 0.9),
+    };
+  }
+
+  if (isBestEdge) {
+    return {
+      ...baseStyles,
+      background: getBackgroundColor(theme, theme.palette.success.main, 0.9),
+    };
+  }
+
+  return baseStyles;
+};
 
 export default function ResultWidget(props: { results?: TestResults[] }) {
   const { results } = props;
-  const classes = useStyles();
-
-  const getTableCellClass = (isBestEdge: boolean, warning?: TestWarnings) => {
-    if (warning?.includes('warn')) return classes[TestWarnings.warn];
-    if (warning === TestWarnings.error) return classes[TestWarnings.error];
-    if (isBestEdge) return classes.bestEdgeCell;
-  };
+  const theme = useTheme();
 
   if (!results) return null;
 
@@ -88,20 +100,29 @@ export default function ResultWidget(props: { results?: TestResults[] }) {
 
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table}>
+      {}
+      <StyledTable>
         <TableHead>
           <TableRow>
             <TableCell></TableCell>
             {results.map((result) => {
               const isBestEdge = !!bestEdge && bestEdge.edge === result.edge;
-              const className = getTableCellClass(isBestEdge);
+              const cellStyle = getTableCellClassName(
+                theme,
+                isBestEdge
+              );
+
               const edgeName = getEdgeName(result) + (isBestEdge && results.length > 1 ? ' (Recommended)' : '');
               return (
-                <TableCell key={result.edge} className={className}>
-                  <div className={classes.headerContent}>
+                <TableCell
+                  key={result.edge}
+                  sx={cellStyle}
+                >
+                  {}
+                  <StyledDivHeaderContent>
                     <ResultIcon result={result} />
                     <Typography>{edgeName}</Typography>
-                  </div>
+                  </StyledDivHeaderContent>
                 </TableCell>
               );
             })}
@@ -113,31 +134,42 @@ export default function ResultWidget(props: { results?: TestResults[] }) {
             return (
               <TableRow key={row.label}>
                 <TableCell>
-                  <div className={classes.tableCellContent}>
+                  {}
+                  <StyledDivTableCellContent>
                     {row.label}
                     {tooltipTitle && (
-                      <Tooltip title={tooltipTitle} placement="top" interactive leaveDelay={250}>
+                      <Tooltip title={tooltipTitle} placement="top" disableInteractive={false} leaveDelay={250}>
                         <InfoIcon />
                       </Tooltip>
                     )}
-                  </div>
+                  </StyledDivTableCellContent>
                 </TableCell>
                 {results.map((result) => {
                   const value = row.getValue(result);
                   const warning = row.getWarning?.(result);
-                  const className = getTableCellClass(!!bestEdge && bestEdge.edge === result.edge, warning);
+                  const isBestEdge = !!bestEdge && bestEdge.edge === result.edge;
+                  const cellStyle = getTableCellClassName(
+                    theme,
+                    isBestEdge,
+                    warning
+                  );
+
                   const tooltipContent = warning ? row.tooltipContent?.[warning] : null;
 
                   return (
-                    <TableCell key={result.edge} className={className}>
-                      <div className={classes.tableCellContent}>
+                    <TableCell
+                      key={result.edge}
+                      sx={cellStyle}
+                    >
+                      {}
+                      <StyledDivTableCellContent>
                         {value}
                         {tooltipContent && (
-                          <Tooltip title={tooltipContent} placement="top" interactive leaveDelay={250}>
+                          <Tooltip title={tooltipContent} placement="top" disableInteractive={false} leaveDelay={250}>
                             <InfoIcon />
                           </Tooltip>
                         )}
-                      </div>
+                      </StyledDivTableCellContent>
                     </TableCell>
                   );
                 })}
@@ -145,7 +177,7 @@ export default function ResultWidget(props: { results?: TestResults[] }) {
             );
           })}
         </TableBody>
-      </Table>
+      </StyledTable>
     </TableContainer>
   );
 }

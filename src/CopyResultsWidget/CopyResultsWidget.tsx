@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Snackbar, makeStyles, Theme } from '@material-ui/core';
-import CopyIcon from '@material-ui/icons/FileCopy';
-import SuccessIcon from '@material-ui/icons/CheckCircle';
+import { Button, Snackbar, styled } from '@mui/material';
+import CopyIcon from '@mui/icons-material/FileCopy';
+import SuccessIcon from '@mui/icons-material/CheckCircle';
 import { TestResults } from '../types';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  snackBar: {
-    background: theme.palette.success.main,
-  },
-  successIcon: {
-    verticalAlign: 'middle',
-    marginRight: '0.5em',
-  },
+const SuccessIconWrapper = styled('span')(() => ({
+  verticalAlign: 'middle',
+  marginRight: '0.5em',
 }));
 
 interface CopyResultsWidgetProps {
@@ -20,7 +15,6 @@ interface CopyResultsWidgetProps {
 
 export default function CopyResultsWidget({ results }: CopyResultsWidgetProps) {
   const [hasCopied, setHasCopied] = useState(false);
-  const classes = useStyles();
 
   if (!results) return null;
 
@@ -32,10 +26,18 @@ export default function CopyResultsWidget({ results }: CopyResultsWidgetProps) {
   return (
     <>
       <Snackbar
-        ContentProps={{ className: classes.snackBar }}
+        slotProps={{
+          content: {
+            sx: {
+              background: 'success.main'
+            }
+          }
+        }}
         message={
           <span>
-            <SuccessIcon className={classes.successIcon} />
+            <SuccessIconWrapper>
+              <SuccessIcon />
+            </SuccessIconWrapper>
             Results Copied to Clipboard
           </span>
         }

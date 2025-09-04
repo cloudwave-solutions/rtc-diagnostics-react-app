@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { getLogger } from 'loglevel';
-import { AppBar, Container, Toolbar, Grid, Paper, CssBaseline, makeStyles, Typography } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { AppBar, Grid, Container, Toolbar, Paper, CssBaseline, Typography } from '@mui/material';
 import AudioDeviceTestWidget from './AudioDeviceTestWidget/AudioDeviceTestWidget';
 import BrowserCompatibilityWidget from './BrowserCompatibilityWidget/BrowserCompatibilityWidget';
 import CopyResultsWidget from './CopyResultsWidget/CopyResultsWidget';
@@ -14,23 +15,23 @@ import SummaryWidget from './SummaryWidget/SummaryWidget';
 const log = getLogger(APP_NAME);
 log.setLevel(LOG_LEVEL);
 
-const useStyles = makeStyles({
-  container: {
-    marginTop: '2em',
-  },
-  paper: {
-    padding: '1.5em',
-  },
-  tableHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '1em',
-  },
-});
+const StyledContainer = styled(Container)(() => ({
+  marginTop: '2em',
+}));
+
+const StyledPaper = styled(Paper)(() => ({
+  padding: '1.5em',
+}));
+
+const TableHeader = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '1em',
+}));
 
 function App() {
-  const classes = useStyles();
+
   const [results, setResults] = useState();
 
   function getTURNCredentials() {
@@ -49,37 +50,37 @@ function App() {
           <img src="twilio-logo.png" style={{ maxHeight: '64px' }} alt="Logo"></img>
         </Toolbar>
       </AppBar>
-      <Container className={classes.container}>
-        <Grid container spacing={3}>
+      <StyledContainer>
+        <Grid container spacing={3} component="div">
           {!Device.isSupported && (
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }} component="div">
               <BrowserCompatibilityWidget />
             </Grid>
           )}
           {Device.isSupported && (
             <>
-              <Grid item xs={12}>
-                <Paper className={classes.paper} elevation={3}>
+              <Grid size={{ xs: 12 }} component="div">
+                <StyledPaper elevation={3}>
                   <AudioDeviceTestWidget />
-                </Paper>
+                </StyledPaper>
               </Grid>
-              <Grid item xs={12}>
-                <Paper className={classes.paper} elevation={3}>
+              <Grid size={{ xs: 12 }} component="div">
+                <StyledPaper elevation={3}>
                   <NetworkTestWidget
                     getVoiceToken={getVoiceToken}
                     getTURNCredentials={getTURNCredentials}
                     onComplete={(res) => setResults(res)}
                   />
                   <SummaryWidget results={results} />
-                </Paper>
+                </StyledPaper>
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }} component="div">
                 <Paper elevation={3}>
                   {results && (
-                    <div className={classes.tableHeader}>
+                    <TableHeader>
                       <Typography variant="h5">Test Results:</Typography>
                       <CopyResultsWidget results={results} />
-                    </div>
+                    </TableHeader>
                   )}
                   <ResultWidget results={results} />
                 </Paper>
@@ -87,7 +88,7 @@ function App() {
             </>
           )}
         </Grid>
-      </Container>
+      </StyledContainer>
     </div>
   );
 }

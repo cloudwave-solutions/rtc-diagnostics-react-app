@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { Call } from '@twilio/voice-sdk';
 import { mount, ReactWrapper } from 'enzyme';
 import { Edge } from '../../types';
