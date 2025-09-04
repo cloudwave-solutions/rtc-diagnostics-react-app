@@ -20,20 +20,18 @@ This application uses Programmable Voice and Twilio NTS to perform the tests and
 ## Prerequisites
 
 - A Twilio account. Sign up for free [here](https://www.twilio.com/try-twilio)
-- Node.js v12+
-- NPM v6+ (comes installed with newer Node versions)
+- Node.js v22+
+- Yarn
 
 ## Install Dependencies
 
-Run `npm install` to install all dependencies from NPM.
-
-If you want to use yarn to install dependencies, first run the [yarn import](https://classic.yarnpkg.com/en/docs/cli/import/) command. This will ensure that yarn installs the package versions that are specified in `package-lock.json`.
+Run `yarn install` to install all dependencies.
 
 ## Deploy the App to Twilio
 
 Before deploying the app, add your Twilio Account SID and Auth Token to the `.env` file (see `.env.example` for an example). The app is deployed to Twilio with a single command:
 
-`$ npm run serverless:deploy`
+`$ yarn serverless:deploy`
 
 This performs the following steps:
 
@@ -48,7 +46,7 @@ When deployment has finished, the Twilio Serverless URL for the application will
 
 To view the App URL, run the following command:
 
-`$ npm run serverless:list`
+`$ yarn serverless:list`
 
 This will display the URL at which the Application can be accessed.
 
@@ -58,13 +56,13 @@ In order to develop this app on your local machine, you will first need to deplo
 
 Once the endpoints are deployed, add the app's URL to the `.env` file. Then you can start a local development server by running the following command:
 
-`$ npm run start`
+`$ yarn start`
 
 ## Tests
 
-Run `npm test` to run all unit tests.
+Run `yarn test` to run all unit tests.
 
-Run `npm run test:serverless` to run all unit and E2E tests on the Serverless scripts. This requires that your Twilio account credentials are stored in the `.env` file.
+Run `yarn test:serverless` to run all unit and E2E tests on the Serverless scripts. This requires that your Twilio account credentials are stored in the `.env` file.
 
 ## Related
 
