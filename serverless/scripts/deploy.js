@@ -51,7 +51,7 @@ async function deployFunctions() {
       APP_EXPIRY: Date.now() + 1000 * 60 * 60 * 24 * 7, // One week
     },
     pkgJson: {},
-    functionsEnv: 'dev',
+    functionsEnv: 'prod',
     assets,
     functions,
     serviceName: `${constants.SERVICE_NAME}-${getRandomString()}`,
@@ -69,7 +69,7 @@ function createTwiMLApp(domain) {
 
 async function createTwiMLAppSidVariable(app, TwiMLApp) {
   cli.action.start('Setting environment variables');
-  const appInstance = await client.serverless.services(app.serviceSid);
+  const appInstance = await client.serverless.v1.services(app.serviceSid);
   const environment = await appInstance.environments(app.environmentSid);
   return await environment.variables.create({ key: 'TWIML_APP_SID', value: TwiMLApp.sid });
 }
