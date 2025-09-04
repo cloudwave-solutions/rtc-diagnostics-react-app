@@ -26,12 +26,13 @@ export default function CopyResultsWidget({ results }: CopyResultsWidgetProps) {
   return (
     <>
       <Snackbar
-        ContentProps={{
-          className: '',
-          sx: {
-            background: 'success.main'
+        slotProps={{
+          content: {
+            sx: {
+              background: 'success.main'
+            }
           }
-      }}
+        }}
         message={
           <span>
             <SuccessIconWrapper>
