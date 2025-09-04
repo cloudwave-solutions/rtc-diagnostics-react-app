@@ -25,5 +25,9 @@
   },
   "include": [
     "src"
-  ]
+  ],
+  "watchOptions": {
+    "watchFile": "useFsEvents",
+    "watchDirectory": "useFsEvents"
+  }
 }

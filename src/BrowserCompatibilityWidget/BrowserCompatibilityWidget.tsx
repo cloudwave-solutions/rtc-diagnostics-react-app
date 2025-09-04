@@ -1,7 +1,7 @@
 import React from 'react';
 import Alert from '../common/Alert/Alert';
-import { Link as LinkImpl, Typography } from '@material-ui/core';
-import { styled } from '@material-ui/core';
+import { Link as LinkImpl, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 const Link = styled(LinkImpl)({
   fontWeight: 600,

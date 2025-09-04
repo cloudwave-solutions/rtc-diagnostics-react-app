@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import CloseIcon from '@material-ui/icons/Close';
-import CheckIcon from '@material-ui/icons/CheckCircleOutline';
-import WarningIcon from '@material-ui/icons/ReportProblemOutlined';
+import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from '@mui/icons-material/CheckCircleOutline';
+import WarningIcon from '@mui/icons-material/ReportProblemOutlined';
 
 import ResultIcon from './ResultIcon';
 

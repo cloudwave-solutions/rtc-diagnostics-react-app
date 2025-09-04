@@ -1,40 +1,34 @@
 import React, { useEffect, useRef, useState } from 'react';
-import clsx from 'clsx';
-import { Button, Divider, Theme, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import RecordIcon from '@material-ui/icons/FiberManualRecord';
-import PlayIcon from '@material-ui/icons/PlayArrow';
+import { Button, Divider, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import RecordIcon from '@mui/icons-material/FiberManualRecord';
+import PlayIcon from '@mui/icons-material/PlayArrow';
 
 import Alert from '../common/Alert/Alert';
 import AudioDevice from './AudioDevice/AudioDevice';
 import useTestRunner from './useTestRunner/useTestRunner';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  button: {
-    backgroundColor: theme.palette.secondary.main,
-    color: '#fff',
-    marginRight: '1em',
-    '&:hover': {
-      backgroundColor: theme.palette.secondary.dark,
-    },
+const StyledButton = styled(Button)<{ busy?: boolean }>(({ theme, busy }) => ({
+  backgroundColor: theme.palette.secondary.main,
+  color: '#fff',
+  marginRight: '1em',
+  '&:hover': {
+    backgroundColor: theme.palette.secondary.dark,
   },
-  icon: {
-    marginRight: '0.3em',
-  },
-  deviceContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    marginBottom: '-30px',
-  },
-  busy: {
+  ...(busy && {
     backgroundColor: `${theme.palette.error.dark} !important`,
     color: '#fff !important',
-  },
+  }),
+}));
+
+const DeviceContainer = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  flexWrap: 'wrap',
+  marginBottom: '10px',
 }));
 
 export default function AudioDeviceTestWidget() {
-  const classes = useStyles();
   const [inputDeviceId, setInputDeviceId] = useState('');
   const [outputDeviceId, setOutputDeviceId] = useState('');
   const previousInputDeviceIdRef = useRef('');
@@ -74,8 +68,8 @@ export default function AudioDeviceTestWidget() {
   }, [error, inputDeviceId, isRecording, isAudioInputTestRunning, readAudioInput]);
 
   return (
-    <div>
-      <Typography variant="h4" paragraph>
+    <DeviceContainer>
+      <Typography variant="h4" component="p">
         Audio Device Tests
       </Typography>
 
@@ -91,25 +85,25 @@ export default function AudioDeviceTestWidget() {
         </Alert>
       )}
 
-      <Button
+      <StyledButton
         disabled={disableAll}
         onClick={handleRecordClick}
-        className={clsx(classes.button, { [classes.busy]: isRecording })}
+        busy={isRecording} // Use the 'busy' prop instead of clsx
         variant="contained"
       >
-        <RecordIcon className={classes.icon} />
+        <RecordIcon sx={{ marginRight: '0.3em' }} /> {/* Use sx prop for icon styling */}
         {'Record' + (isRecording ? 'ing...' : '')}
-      </Button>
+      </StyledButton>
 
-      <Button
+      <StyledButton
         disabled={!playbackURI || disableAll}
         onClick={handlePlayClick}
-        className={clsx(classes.button, { [classes.busy]: isAudioOutputTestRunning })}
+        busy={isAudioOutputTestRunning} // Use the 'busy' prop instead of clsx
         variant="contained"
       >
-        <PlayIcon className={classes.icon} />
+        <PlayIcon sx={{ marginRight: '0.3em' }} /> {/* Use sx prop for icon styling */}
         {'Play' + (isAudioOutputTestRunning ? 'ing...' : '')}
-      </Button>
+      </StyledButton>
 
       <Divider style={{ margin: '1.5em 0' }} />
 
@@ -119,10 +113,10 @@ export default function AudioDeviceTestWidget() {
         </Alert>
       )}
 
-      <div className={classes.deviceContainer}>
+      <DeviceContainer>
         <AudioDevice disabled={disableAll} kind="audiooutput" level={outputLevel} onDeviceChange={setOutputDeviceId} />
         <AudioDevice disabled={disableAll} kind="audioinput" level={inputLevel} onDeviceChange={setInputDeviceId} />
-      </div>
-    </div>
+      </DeviceContainer>
+    </DeviceContainer>
   );
 }
