@@ -15,15 +15,15 @@ import SummaryWidget from './SummaryWidget/SummaryWidget';
 const log = getLogger(APP_NAME);
 log.setLevel(LOG_LEVEL);
 
-const StyledContainer = styled(Container)(({ theme }) => ({
+const StyledContainer = styled(Container)(() => ({
   marginTop: '2em',
 }));
 
-const StyledPaper = styled(Paper)(({ theme }) => ({
+const StyledPaper = styled(Paper)(() => ({
   padding: '1.5em',
 }));
 
-const TableHeader = styled('div')(({ theme }) => ({
+const TableHeader = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -47,7 +47,7 @@ function App() {
       <CssBaseline />
       <AppBar position="static">
         <Toolbar>
-          <img src="twilio-logo.png" style={{ maxHeight: '64px' }} alt="Logo"></img>
+          <img src="../public/twilio-logo.png" style={{ maxHeight: '64px' }} alt="Logo"></img>
         </Toolbar>
       </AppBar>
       <StyledContainer>

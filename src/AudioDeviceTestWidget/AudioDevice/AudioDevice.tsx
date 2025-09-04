@@ -18,17 +18,17 @@ const labels = {
   }
 };
 
-const AudioLevelContainer = styled('div')(({ theme}) => ({
+const AudioLevelContainer = styled('div')(() => ({
   display: 'flex',
   alignItems: 'center',
 }));
 
-const StyledFormControl = styled(FormControl)(({ theme}) => ({
+const StyledFormControl = styled(FormControl)(() => ({
   margin: '1em 0',
   minWidth: 200,
 }));
 
-const DeviceLabelContainer = styled('div')(({ theme }) => ({
+const DeviceLabelContainer = styled('div')(() => ({
   margin: '1em 0',
   '&> *': {
     marginBottom: '0.3em'

@@ -17,18 +17,18 @@ import { Edge } from '../../types';
 
 const { PCMU, Opus } = Call.Codec;
 
-const StyledContainer = styled(Grid)(({ theme }) => ({
+const StyledContainer = styled(Grid)(() => ({
   padding: '1em',
   maxWidth: '400px',
 }));
 
-const StyledFormContainer = styled('form')(({ theme }) => ({
+const StyledFormContainer = styled('form')(() => ({
   display: 'block',
   padding: '1em',
   width: '100%',
 }));
 
-const HeaderContainer = styled('div')(({ theme }) => ({
+const HeaderContainer = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'space-between',
 }));

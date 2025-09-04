@@ -36,7 +36,7 @@ export default function NetworkTestWidget({ getTURNCredentials, getVoiceToken, o
 
   return (
     <div>
-      <Typography variant="h4" paragraph>
+      <Typography variant="h4" component="p">
         Connectivity and Bandwidth Tests
       </Typography>
       <div style={{ margin: '1em 1em 0' }}>

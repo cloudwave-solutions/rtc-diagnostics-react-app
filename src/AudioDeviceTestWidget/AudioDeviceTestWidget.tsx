@@ -21,7 +21,7 @@ const StyledButton = styled(Button)<{ busy?: boolean }>(({ theme, busy }) => ({
   }),
 }));
 
-const DeviceContainer = styled('div')(({ theme }) => ({
+const DeviceContainer = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   flexWrap: 'wrap',

@@ -41,7 +41,7 @@ const StyledTable = styled(Table)<{ theme?: Theme }>(({ theme }) => ({
   },
 }));
 
-const StyledDivTableCellContent = styled('div')(({ theme }) => ({
+const StyledDivTableCellContent = styled('div')(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -51,7 +51,7 @@ const StyledDivTableCellContent = styled('div')(({ theme }) => ({
   },
 }));
 
-const StyledDivHeaderContent = styled('div')(({ theme }) => ({
+const StyledDivHeaderContent = styled('div')(() => ({
   display: 'flex',
   '& p': {
     fontWeight: 'bold',

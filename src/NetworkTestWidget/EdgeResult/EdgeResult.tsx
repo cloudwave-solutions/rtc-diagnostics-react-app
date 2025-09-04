@@ -12,7 +12,7 @@ import ResultIcon from '../../ResultWidget/ResultIcon/ResultIcon';
 import getTooltipContent from './getTooltipContent';
 import { NetworkTestName, Edge, TestResults } from '../../types';
 
-const Container = styled('div')<{ isPending?: boolean }>(({ theme, isPending }) => ({
+const Container = styled('div')<{ isPending?: boolean }>(({ isPending }) => ({
   border: '1px solid #ddd',
   borderRadius: '3px',
   display: 'flex',
@@ -26,18 +26,18 @@ const Container = styled('div')<{ isPending?: boolean }>(({ theme, isPending }) 
   }),
 }));
 
-const ProgressContainer = styled('div')(({ theme }) => ({
+const ProgressContainer = styled('div')(() => ({
   flex: 1,
   padding: '0 1em',
 }));
 
-const EdgeLabel = styled(Typography)(({ theme }) => ({
+const EdgeLabel = styled(Typography)(() => ({
   minWidth: '170px',
   width: '15%',
   whiteSpace: 'nowrap',
 })) as typeof Typography;
 
-const IconContainer = styled('div')(({ theme }) => ({
+const IconContainer = styled('div')(() => ({
   width: '15%',
   display: 'flex',
   justifyContent: 'flex-end',

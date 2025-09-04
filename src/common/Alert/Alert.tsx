@@ -42,7 +42,7 @@ const AlertContainer = styled('div')<{ variant: 'success' | 'warning' | 'error' 
   };
 });
 
-const ContentContainer = styled('div')(({ theme }) => ({
+const ContentContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
