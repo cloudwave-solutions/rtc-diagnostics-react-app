@@ -1,27 +1,28 @@
 import React, { useRef, useEffect } from 'react';
-import { fade } from '@material-ui/core/styles/colorManipulator';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { alpha } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  container: {
-    position: 'relative',
-    margin: '1em',
-    height: '4px',
-    '& div': {
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      left: 0,
-    },
+const Container = styled('div')(() => ({
+  position: 'relative',
+  margin: '1em',
+  height: '4px',
+  '& div': {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
   },
-  progress: {
-    background: theme.palette.secondary.main,
-    right: '100%',
-  },
-  background: {
-    right: 0,
-    background: fade(theme.palette.secondary.main, 0.2),
-  },
+}));
+
+const ProgressBarElement = styled('div')<{ position: number }>(({ theme, position }) => ({
+  background: theme.palette.secondary.main,
+  right: `${100 - position}%`, // Set initial position
+  transition: 'right 0s linear', // Initial transition (will be updated in useEffect)
+}));
+
+const Background = styled('div')(({ theme }) => ({
+  right: 0,
+  background: alpha(theme.palette.secondary.main, 0.2),
 }));
 
 interface ProgressBarProps {
@@ -31,7 +32,6 @@ interface ProgressBarProps {
 }
 
 export default function ProgressBar({ duration, position, style }: ProgressBarProps) {
-  const classes = useStyles();
   const progressBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -47,9 +47,12 @@ export default function ProgressBar({ duration, position, style }: ProgressBarPr
   }, [duration, position]);
 
   return (
-    <div className={classes.container} style={{...style}}>
-      <div className={classes.progress} ref={progressBarRef}></div>
-      <div className={classes.background}></div>
-    </div>
+    <Container style={{...style}}>
+      <ProgressBarElement
+        ref={progressBarRef}
+        position={position}
+      />
+      <Background />
+    </Container>
   );
 }

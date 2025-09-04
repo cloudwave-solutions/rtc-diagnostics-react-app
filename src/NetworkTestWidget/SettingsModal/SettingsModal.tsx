@@ -9,29 +9,29 @@ import {
   Grid,
   Radio,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { Call } from '@twilio/voice-sdk';
 import { DEFAULT_CODEC_PREFERENCES, DEFAULT_EDGES, MAX_SELECTED_EDGES, MIN_SELECTED_EDGES } from '../../constants';
-import { makeStyles } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import { Edge } from '../../types';
 
 const { PCMU, Opus } = Call.Codec;
 
-const useStyles = makeStyles({
-  container: {
-    padding: '1em',
-    maxWidth: '400px',
-  },
-  innerContainer: {
-    display: 'block',
-    padding: '1em',
-    width: '100%',
-  },
-  headerContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-});
+const StyledContainer = styled(Grid)(({ theme }) => ({
+  padding: '1em',
+  maxWidth: '400px',
+}));
+
+const StyledFormContainer = styled('form')(({ theme }) => ({
+  display: 'block',
+  padding: '1em',
+  width: '100%',
+}));
+
+const HeaderContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+}));
 
 type InitialState = {
   [key in Edge]: boolean;
@@ -75,7 +75,6 @@ export default function SettingsModal({
   isOpen: boolean;
   onSettingsChange: (q: any) => void;
 }) {
-  const classes = useStyles();
 
   const [edges, setEdges] = useState(initialState);
   const [codec, setCodec] = useState<string>(DEFAULT_CODEC_PREFERENCES.join(''));
@@ -107,17 +106,17 @@ export default function SettingsModal({
 
   return (
     <Dialog open={isOpen} onClose={handleClose}>
-      <Grid container className={classes.container}>
-        <form className={classes.innerContainer}>
-          <div className={classes.headerContainer}>
+      <StyledContainer>
+        <StyledFormContainer>
+          <HeaderContainer>
             <Typography gutterBottom>
               <strong>Edge Locations:</strong>
             </Typography>
             <Typography>{`${selectedEdges} of ${MAX_SELECTED_EDGES}`}</Typography>
-          </div>
+          </HeaderContainer>
           <FormGroup>
             <Grid container>
-              <Grid item xs={6}>
+              <Grid size={{ xs: 6 }} container>
                 <FormControlLabel
                   control={<Checkbox checked={edges.ashburn} onChange={handleEdgeChange} name="ashburn" />}
                   label="Ashburn"
@@ -147,7 +146,7 @@ export default function SettingsModal({
                   label="Sydney"
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid size={{ xs: 6 }} container>
                 <FormControlLabel
                   control={<Checkbox checked={edges.tokyo} onChange={handleEdgeChange} name="tokyo" />}
                   label="Tokyo"
@@ -205,10 +204,10 @@ export default function SettingsModal({
               />
             </Grid>
           </FormGroup>
-        </form>
-      </Grid>
+        </StyledFormContainer>
+      </StyledContainer>
       <Divider />
-      <Grid container justify="flex-end">
+      <Grid container justifyContent="flex-end">
         <Button color="secondary" onClick={handleClose} style={{ margin: '0.4em 0' }}>
           Apply
         </Button>

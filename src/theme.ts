@@ -1,6 +1,6 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@mui/material/styles';
 
-declare module '@material-ui/core/styles/createMuiTheme' {
+declare module '@mui/material/styles' {
   interface Theme {
     sidebarWidth: number;
     sidebarMobileHeight: number;
@@ -13,7 +13,9 @@ declare module '@material-ui/core/styles/createMuiTheme' {
   }
 }
 
-export default createMuiTheme({
+const theme = createTheme({
+  sidebarWidth: 240, // Default value
+  sidebarMobileHeight: 56, // Default value
   palette: {
     primary: {
       main: '#0D122B',
@@ -23,3 +25,5 @@ export default createMuiTheme({
     },
   },
 });
+
+export default theme;

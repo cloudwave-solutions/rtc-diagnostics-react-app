@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { Call } from '@twilio/voice-sdk';
 import EdgeResult from './EdgeResult';
 import ProgressBar from '../../common/ProgressBar/ProgressBar';
-import { Tooltip } from '@material-ui/core';
+import { Tooltip } from '@mui/material';
 
 import ResultIcon from '../../ResultWidget/ResultIcon/ResultIcon';
 

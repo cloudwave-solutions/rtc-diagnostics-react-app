@@ -1,5 +1,6 @@
 import { EventEmitter } from 'events';
-import { act, HookResult, renderHook } from '@testing-library/react-hooks';
+// import { act, HookResult, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 import useTestRunner from './useTestRunner';
 
 class MockAudioInputTest extends EventEmitter {
@@ -105,7 +106,8 @@ describe('the useTestRunner hook', () => {
     });
 
     describe('when test ends', () => {
-      let result: HookResult<any>;
+      // let result: HookResult<any>;
+      let { result } = renderHook(() => useTestRunner());
 
       beforeEach(() => {
         result = renderHook(useTestRunner).result;
@@ -238,7 +240,8 @@ describe('the useTestRunner hook', () => {
     });
 
     describe('when test ends', () => {
-      let result: HookResult<any>;
+      // let result: HookResult<any>;
+      let { result } = renderHook(() => useTestRunner());
 
       beforeEach(() => {
         result = renderHook(useTestRunner).result;

@@ -1,10 +1,9 @@
 import React from 'react';
 import { Call } from '@twilio/voice-sdk';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Typography, Tooltip } from '@material-ui/core';
-import clsx from 'clsx';
+import { styled } from '@mui/material/styles';
+import { Typography, Tooltip } from '@mui/material';
 
-import InfoIcon from '@material-ui/icons/Info';
+import InfoIcon from '@mui/icons-material/Info';
 import ProgressBar from '../../common/ProgressBar/ProgressBar';
 import { codecNameMap, edgeNameMap } from '../../utils';
 
@@ -13,36 +12,37 @@ import ResultIcon from '../../ResultWidget/ResultIcon/ResultIcon';
 import getTooltipContent from './getTooltipContent';
 import { NetworkTestName, Edge, TestResults } from '../../types';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  container: {
-    border: '1px solid #ddd',
-    borderRadius: '3px',
-    display: 'flex',
-    padding: '0.8em',
-    background: '#eee',
-    alignItems: 'center',
-    margin: '1em 0',
-    justifyContent: 'space-between',
-  },
-  progressContainer: {
-    flex: 1,
-    padding: '0 1em',
-  },
-  edgeLabel: {
-    minWidth: '170px',
-    width: '15%',
-    whiteSpace: 'nowrap',
-  },
-  iconContainer: {
-    width: '15%',
-    display: 'flex',
-    justifyContent: 'flex-end',
-    '& svg': {
-      margin: '0 0.3em',
-    },
-  },
-  pendingTest: {
+const Container = styled('div')<{ isPending?: boolean }>(({ theme, isPending }) => ({
+  border: '1px solid #ddd',
+  borderRadius: '3px',
+  display: 'flex',
+  padding: '0.8em',
+  background: '#eee',
+  alignItems: 'center',
+  margin: '1em 0',
+  justifyContent: 'space-between',
+  ...(isPending && {
     opacity: 0.5,
+  }),
+}));
+
+const ProgressContainer = styled('div')(({ theme }) => ({
+  flex: 1,
+  padding: '0 1em',
+}));
+
+const EdgeLabel = styled(Typography)(({ theme }) => ({
+  minWidth: '170px',
+  width: '15%',
+  whiteSpace: 'nowrap',
+})) as typeof Typography;
+
+const IconContainer = styled('div')(({ theme }) => ({
+  width: '15%',
+  display: 'flex',
+  justifyContent: 'flex-end',
+  '& svg': {
+    margin: '0 0.3em',
   },
 }));
 
@@ -67,27 +67,28 @@ const progressBarTimings = {
 
 export default function EdgeResult(props: EdgeResultProps) {
   const { codecPreferences, edge, isActive, result, activeTest } = props;
-  const classes = useStyles();
 
   const progressDuration = activeTest ? progressBarTimings[activeTest].duration : 0;
   const progressPosition = activeTest ? progressBarTimings[activeTest].position : 0;
 
   const codecLabel = codecPreferences.map((codec) => codecNameMap[codec]).join(', ');
 
+  const isPending = !isActive && !result;
+
   return (
-    <div className={clsx(classes.container, { [classes.pendingTest]: !isActive && !result })}>
-      <Typography className={classes.edgeLabel}>{`${edgeNameMap[edge]} (${codecLabel})`}</Typography>
-      <div className={classes.progressContainer}>
+    <Container isPending={isPending}>
+      <EdgeLabel>{`${edgeNameMap[edge]} (${codecLabel})`}</EdgeLabel>
+      <ProgressContainer>
         {isActive && <ProgressBar position={progressPosition} duration={progressDuration} />}
-      </div>
+      </ProgressContainer>
       {result && (
-        <div className={classes.iconContainer}>
+        <IconContainer>
           <ResultIcon result={result} />
-          <Tooltip title={getTooltipContent(result)} placement="top" interactive>
+          <Tooltip title={getTooltipContent(result)} placement="top" disableInteractive={false}>
             <InfoIcon />
           </Tooltip>
-        </div>
+        </IconContainer>
       )}
-    </div>
+    </Container>
   );
 }

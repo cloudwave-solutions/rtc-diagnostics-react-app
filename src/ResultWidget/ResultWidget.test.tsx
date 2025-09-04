@@ -1,7 +1,7 @@
 import React from 'react';
 import ResultWidget from './ResultWidget';
 import { shallow } from 'enzyme';
-import { TableContainer, Table } from '@material-ui/core';
+import { TableContainer, Table } from '@mui/material';
 
 import toJson, { OutputMapper } from 'enzyme-to-json';
 

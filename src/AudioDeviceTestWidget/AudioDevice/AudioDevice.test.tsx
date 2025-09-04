@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, Typography } from '@material-ui/core';
+import { Select, Typography } from '@mui/material';
 import { render } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
 

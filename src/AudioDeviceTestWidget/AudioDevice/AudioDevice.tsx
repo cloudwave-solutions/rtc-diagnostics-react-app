@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FormControl, InputLabel, MenuItem, Select, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 import ProgressBar from '../../common/ProgressBar/ProgressBar';
 import { useDevices } from '../useDevices/useDevices';
@@ -18,20 +18,20 @@ const labels = {
   }
 };
 
-const useStyles = makeStyles(() => ({
-  audioLevelContainer: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  form: {
-    margin: '1em 0',
-    minWidth: 200,
-  },
-  deviceLabelContainer: {
-    margin: '1em 0',
-    '&> *': {
-      marginBottom: '0.3em'
-    }
+const AudioLevelContainer = styled('div')(({ theme}) => ({
+  display: 'flex',
+  alignItems: 'center',
+}));
+
+const StyledFormControl = styled(FormControl)(({ theme}) => ({
+  margin: '1em 0',
+  minWidth: 200,
+}));
+
+const DeviceLabelContainer = styled('div')(({ theme }) => ({
+  margin: '1em 0',
+  '&> *': {
+    marginBottom: '0.3em'
   }
 }));
 
@@ -43,8 +43,8 @@ interface AudioDeviceProps {
 }
 
 export default function AudioDevice({ disabled, level, kind, onDeviceChange }: AudioDeviceProps) {
-  const classes = useStyles();
   const devices = useDevices().filter(device => device.kind === kind);
+
   const [selectedDevice, setSelectedDevice] = useState('');
 
   const { audioLevelText, deviceLabelHeader, headerText } = labels[kind];
@@ -67,14 +67,14 @@ export default function AudioDevice({ disabled, level, kind, onDeviceChange }: A
       <Typography variant="h5">{headerText}</Typography>
 
       {noAudioRedirect && (
-        <div className={classes.deviceLabelContainer}>
+        <DeviceLabelContainer>
           <Typography variant="subtitle2">{deviceLabelHeader}</Typography>
           <Typography>System Default Audio Output</Typography>
-        </div>
+        </DeviceLabelContainer>
       )}
 
       {!noAudioRedirect && (
-        <FormControl disabled={disabled} variant="outlined" className={classes.form} fullWidth>
+        <StyledFormControl disabled={disabled} variant="outlined" fullWidth>
           <InputLabel>{deviceLabelHeader}</InputLabel>
           <Select
             label={deviceLabelHeader}
@@ -87,10 +87,10 @@ export default function AudioDevice({ disabled, level, kind, onDeviceChange }: A
               </MenuItem>
             ))}
           </Select>
-        </FormControl>
+        </StyledFormControl>
       )}
 
-      <div className={classes.audioLevelContainer}>
+      <AudioLevelContainer>
         <Typography variant="subtitle2" style={{ marginRight: '1em' }}>
           {audioLevelText}:
         </Typography>
@@ -99,7 +99,7 @@ export default function AudioDevice({ disabled, level, kind, onDeviceChange }: A
           duration={0.1}
           style={{ flex: '1', margin: '0' }}
         />
-      </div>
+      </AudioLevelContainer>
     </div>
   );
 }

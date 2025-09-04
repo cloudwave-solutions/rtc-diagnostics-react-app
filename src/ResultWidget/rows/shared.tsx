@@ -1,7 +1,7 @@
 import React from 'react';
 import { TestWarnings, TestResults } from '../../types';
-import { Link as LinkImpl, Typography as TypographyImpl } from '@material-ui/core';
-import { styled } from '@material-ui/core/styles';
+import { Link as LinkImpl, Typography as TypographyImpl } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 export type RowLabel =
   | 'Signalling Servers Reachable'
