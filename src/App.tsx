@@ -47,7 +47,7 @@ function App() {
       <CssBaseline />
       <AppBar position="static">
         <Toolbar>
-          <img src="../public/twilio-logo.png" style={{ maxHeight: '64px' }} alt="Logo"></img>
+          <img src="twilio-logo.png" style={{ maxHeight: '64px' }} alt="Logo"></img>
         </Toolbar>
       </AppBar>
       <StyledContainer>
