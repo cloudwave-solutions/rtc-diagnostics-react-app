@@ -1,4 +1,4 @@
-# Voice Diagnostics Tool
+# Twilio Voice Diagnostics Tool
 
 [![CircleCI](https://circleci.com/gh/twilio/rtc-diagnostics-react-app.svg?style=svg)](https://circleci.com/gh/twilio/rtc-diagnostics-react-app)
 
@@ -74,3 +74,10 @@ Run `yarn test:serverless` to run all unit and E2E tests on the Serverless scrip
 ## License
 
 See the [LICENSE](LICENSE) file for details.
+
+
+## Screenshots
+
+![Screenshot 1](docs/screenshots/Screenshot-1.png)
+
+![Screenshot 2](docs/screenshots/Screenshot-2.png)
