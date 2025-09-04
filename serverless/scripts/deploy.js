@@ -51,7 +51,7 @@ async function deployFunctions() {
       APP_EXPIRY: Date.now() + 1000 * 60 * 60 * 24 * 7, // One week
     },
     pkgJson: {},
-    functionsEnv: 'dev',
+    functionsEnv: 'prod',
     assets,
     functions,
     serviceName: `${constants.SERVICE_NAME}-${getRandomString()}`,
